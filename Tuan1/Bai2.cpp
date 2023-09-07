@@ -9,8 +9,9 @@ class Point {
 
 class Line {
 	public:
-		Point A;
-		Point B;
+		double a;
+		double b;
+		double c;
 };
 
 int main() {
@@ -25,6 +26,9 @@ int main() {
 	int b2 = D.y - C.y;
 	int c2 = D.x*C.y - C.x*D.y;
 	
+	Line l1;
+	l1.a = 
+	
 	cout<<"pt cua AB la: "<<b1<<"x + "<<a1<<"y + "<<c1<<" = 0"<<endl;
 	cout<<"pt cua CD la: "<<b2<<"x + "<<a2<<"y + "<<c2<<" = 0"<<endl;
 	
@@ -32,6 +36,8 @@ int main() {
 		cout<<"NO";
 	}else if(a1==a2 && b1==b2) {
 		cout<<"MANY";
+	}else {
+		
 	}
 	//not finished yet
 	return 0;
