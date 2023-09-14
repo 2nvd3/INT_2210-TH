@@ -1,44 +1,59 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
 class Point {
-	public:
-		double x;
-		double y;
+public:
+    double x;
+    double y;
 };
 
 class Line {
-	public:
-		double a;
-		double b;
-		double c;
+public:
+    double a;
+    double b;
+    double y_ = 0;
+    Line(Point A, Point B) {
+        double d = B.x - A.x;
+        double dx = B.y - A.y;
+        double dy = A.x * B.y - B.x * A.y;
+        if (d == 0 && dx)
+            a = 1, b = 0, y_ = A.x;
+        else if (d == 0 && dx == 0) {
+            cout << "2 points are identical";
+            exit(0);
+        } else {
+            a = dx / d;
+            b = dy / d;
+        }
+    }
 };
 
 int main() {
-	Point A,B,C,D;
-	cin>>A.x>>A.y>>B.x>>B.y>>C.x>>C.y>>D.x>>D.y;
-	
-	int a1 = A.x - B.x;
-	int b1 = B.y - A.y;
-	int c1 = B.x*A.y - A.x*B.y;
-	
-	int a2 = C.x - D.x;
-	int b2 = D.y - C.y;
-	int c2 = D.x*C.y - C.x*D.y;
-	
-	Line l1;
-	l1.a = 
-	
-	cout<<"pt cua AB la: "<<b1<<"x + "<<a1<<"y + "<<c1<<" = 0"<<endl;
-	cout<<"pt cua CD la: "<<b2<<"x + "<<a2<<"y + "<<c2<<" = 0"<<endl;
-	
-	if(a1==a2 && b1!=b2) {
-		cout<<"NO";
-	}else if(a1==a2 && b1==b2) {
-		cout<<"MANY";
-	}else {
-		
-	}
-	//not finished yet
-	return 0;
+    Point A, B, C, D;
+
+    cin >> A.x >> A.y;
+    cin >> B.x >> B.y;
+    cin >> C.x >> C.y;
+    cin >> D.x >> D.y;
+
+    Line AB(A, B);
+    Line CD(C, D);
+
+    if(AB.y_ && CD.y_) {
+        if(AB.y_ == CD.y_) cout<<"MANY";
+        else cout<<"NO";
+    } else if(AB.y_) cout<<AB.y_<<" "<<CD.a*AB.y_+CD.b;
+    else if(CD.y_) cout<<CD.y_<<" "<<AB.a*CD.y_+AB.b;
+    else {
+        double d = CD.a - AB.a;
+        double dx = AB.b - CD.b;
+        double dy = CD.a*AB.b - AB.a*CD.b;
+        if (d == 0 && dx && dy ) cout << "NO";
+        else if (d == 0 && (dx == 0 || dy == 0)) cout <<"MANY";
+        else {
+            cout << dx/d << " " << dy/d;
+        }
+    }
+
+    return 0;
 }
