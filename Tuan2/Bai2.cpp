@@ -1,61 +1,79 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
 
-struct Node {
+class Node {
+public:
     int data;
     Node* next;
+
+    Node(int data) {
+        this->data = data;
+        this->next = NULL;
+    }
 };
 
 class LinkedList {
-    Node* head;
+private:
+    int n;
 public:
-    LinkedList() : head(NULL) {}
+    Node* head;
 
-    void insert(int p, int x) {
-        Node* newNode = new Node();
-        newNode->data = x;
-        if (p == 0) {
+    LinkedList() {
+        n = 0;
+        head = NULL;
+    }
+
+    void insertNode(int pos, int data) {
+        Node* newNode = new Node(data);
+
+        if (pos == 0) {
             newNode->next = head;
             head = newNode;
-        } else {
-            Node* temp = head;
-            for (int i = 0; temp != NULL && i < p - 1; i++) {
-                temp = temp->next;
-            }
-            if (temp != NULL) {
-                newNode->next = temp->next;
-                temp->next = newNode;
-            }
         }
+        else if (pos == n) {
+            Node* prevNode = head;
+            while(prevNode->next != NULL) {
+                prevNode = prevNode->next;
+            }
+            prevNode->next = newNode;
+        }
+        else {
+            Node* prevNode = head;
+            for (int i = 0; i < pos; i++) {
+                prevNode = prevNode->next;
+            }
+            Node* nextNode = prevNode->next;
+
+            newNode->next = nextNode;
+            prevNode->next = newNode;
+        }
+        n++;
     }
 
-    void deleteNode(int p) {
-        if (head == NULL)
-            return;
-        Node* temp = head;
-
-        if (p == 0) {
-            head = temp->next;
-            delete temp;
-            return;
+    void deleteNode(int pos) {
+        if (pos == 0) {
+            head = head->next;
         }
-
-        for (int i=0; temp!=NULL && i<p-1; i++)
-             temp = temp->next;
-
-        if (temp == NULL || temp->next == NULL)
-             return;
-
-        Node *next = temp->next->next;
-
-        delete temp->next;
-
-        temp->next = next;
+        else if (pos == n) {
+            Node* prevNode = head;
+            while(prevNode->next != NULL) {
+                prevNode = prevNode->next;
+            }
+            prevNode->next = NULL;
+        }
+        else {
+            Node* prevNode = head;
+            for (int i = 0; i < pos; i++) {
+                prevNode = prevNode->next;
+            }
+            prevNode->next = prevNode->next->next;
+        }
+        n--;
     }
 
-    void printList() {
+    void print() {
         Node* node = head;
-        while (node != NULL) {
+        while(node != NULL) {
             cout << node->data << " ";
             node = node->next;
         }
@@ -63,24 +81,26 @@ public:
     }
 };
 
-int main() {
-    LinkedList ll;
-    int n, p, x;
-    string op;
 
+int main() {
+    int n;
     cin >> n;
-    for(int i=0; i<n; i++) {
+    LinkedList l;
+    while(n--) {
+        string op;
+        int p, x;
         cin >> op;
-        if(op == "insert") {
+        if (op == "insert") {
             cin >> p >> x;
-            ll.insert(p, x);
-        } else if(op == "delete") {
+            l.insertNode(p, x);
+        }
+        else if (op == "delete") {
             cin >> p;
-            ll.deleteNode(p);
+            l.deleteNode(p);
         }
     }
-
-    ll.printList();
-
+    
+    l.print();
+    
     return 0;
 }
