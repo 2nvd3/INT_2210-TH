@@ -1,28 +1,32 @@
-#include<bits/stdc++.h>
+//O(n)
+#include<iostream>
 using namespace std;
 
+int case_1(int n) {
+    int result = 0;
+    for(int i = 0; i < n; i++) {
+        result += 2;
+    }
+    return result;
+}
+
 int main() {
-    int n, m, x;
-    cin >> n >> m >> x;
-    vector<int> a(n), b(m);
-    for(int i=0; i<n; i++) cin >> a[i];
-    for(int i=0; i<m; i++) cin >> b[i];
-    int count = 0, sum = 0;
-    int i = 0, j = 0;
-    while(i<n && sum+a[i]<=x) {
-        sum += a[i];
-        i++;
-    }
-    count = i;
-    while(j<m && i>=0) {
-        sum += b[j];
-        j++;
-        while(x<sum && i>0) {
-            i--;
-            sum -= a[i];
-        }
-        if(sum<=x && count<i+j) count = i + j;
-    }
-    cout << count << endl;
+    int n; cin>>n;
+    cout << case_1(n);
+    return 0;
+}
+
+
+//O(1)
+#include<iostream>
+using namespace std;
+
+int case_2(int n) {
+    return 2*n;
+}
+
+int main() {
+    int n; cin>>n;
+    cout<<case_2(n);
     return 0;
 }
